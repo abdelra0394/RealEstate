@@ -1,0 +1,62 @@
+﻿@model RealState.Models.ViewModel
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/states.css">
+<style>
+    .fa-edit, .fa-trash {
+        color: #32749b;
+    }
+
+    .f a {
+        color: #000;
+        text-decoration: none;
+    }
+</style>
+<!--start States-->
+<div class="states">
+    <div class="container">
+        <h2 class="text-center mb-5">Requests</h2>
+        <div class="row">
+            @{ 
+                int i = 0;
+            }
+            @foreach (var item in Model.states)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card" style="width: 18rem;">
+                        <img src="@item.link" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <h4 class="card-title price">@item.BuyRent</h4>
+                                </div>
+                                <div class="col-5">
+                                    <h6 class="card-title price">@item.Rentalperiod</h6>
+                                </div>
+                                <div class="col-2 f">
+                                    @Html.ActionLink(" ", "AddFav", new { StateId = item.State_Id }, new { @class = "fa fa-heart" })
+                                </div>
+                            </div>
+                            <h6 class="price">@item.Price USD</h6>
+                            <p class="card-text">@item.Description</p>
+                            <div class="row">
+                                <div class="col-10">
+                                    @Html.ActionLink("Details", "Details", new { id = item.State_Id }, new { @class = "btn btn-primary buy" })
+                                </div>
+                                <div class="col-2">
+                                    <a class="fa fa-trash" href="/States/RemoveRequest/@Model.requests[i].RequestId"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                i++;
+            }
+
+
+        </div>
+    </div>
+</div>
+<!--end states-->

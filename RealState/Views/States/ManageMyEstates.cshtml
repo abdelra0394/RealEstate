@@ -1,0 +1,91 @@
+﻿@model IEnumerable<RealState.Models.State>
+
+@{
+    ViewBag.Title = "ManageMyEstates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/states.css">
+<style>
+    .fa-edit, .fa-trash {
+        color: #32749b;
+    }
+
+    .f a {
+        color: #000;
+        text-decoration: none;
+    }
+    .center.btn {
+        background: var(--color-main);
+        color: var(--color-white);
+        padding: 15px 20px;
+        font-size: 14px;
+        line-height: 0;
+        border-radius: 15px;
+    }
+</style>
+<!--start States-->
+<div class="states">
+    <div class="container">
+        <h2 class="text-center mb-5">Manage My Estates</h2>
+        @if (ViewBag.selled == "no")
+        {
+            @Html.ActionLink("selled", "ManageMyEstates", new { selled = "yes" }, new { @class = "btn btn-primary buy center" })
+        }
+        else
+        {
+            <h2>Selled</h2>
+
+        }
+
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card" style="width: 18rem;">
+                        <img src="@item.link" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <h4 class="card-title price">@item.BuyRent</h4>
+                                </div>
+                                <div class="col-5">
+                                    <h6 class="card-title price">@item.Rentalperiod</h6>
+                                </div>
+                                <div class="col-2 f">
+                                    @Html.ActionLink(" ", "AddFav", new { StateId = item.State_Id }, new { @class = "fa fa-heart" })
+                                </div>
+                            </div>
+                            @if (item.Offers == "Yes")
+                            {
+                                <del class="price h6" style="color:red;">@item.Price USD</del>
+                                <h6 class="price">@item.priceOffer USD</h6>
+                            }
+                            else
+                            {
+                                <h6 class="price">@item.Price USD</h6>
+                            }
+                            <p class="card-text">@item.Description</p>
+                            <div class="row">
+                                <div class="col-9">
+                                    @Html.ActionLink("Details", "Details", new { id = item.State_Id }, new { @class = "btn btn-primary buy" })
+                                </div>
+                                @if (item.user_Id == ViewBag.id)
+                                {
+                                    <div class="col-3">
+                                        <a class="fas fa-edit" href="/States/Edit/@item.State_Id"></a>
+                                        <a class="fa fa-trash" href="/States/Delete/@item.State_Id"></a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+    </div>
+</div>
+<!--end states-->
